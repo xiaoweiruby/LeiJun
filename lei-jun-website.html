@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雷军 - 个人网站</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        /* 导航栏样式 */
+        .navbar {
+            background: linear-gradient(135deg, #ff6600, #ff8533);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-item {
+            cursor: pointer;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background-color: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* 页面内容容器 */
+        .page-content {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 首页样式 */
+        .hero {
+            background: linear-gradient(135deg, #ff6600, #333);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            background-color: white;
+            color: #ff6600;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .about-section {
+            padding: 4rem 0;
+            background-color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .achievements {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .achievements li {
+            padding: 0.5rem 0;
+            border-left: 3px solid #ff6600;
+            padding-left: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .photo-item {
+            background-color: #ddd;
+            height: 200px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* 视频页面样式 */
+        .video-section {
+            padding: 4rem 0;
+            background-color: white;
+        }
+
+        .featured-video {
+            background-color: #333;
+            height: 400px;
+            border-radius: 10px;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            position: relative;
+        }
+
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background-color: #ff6600;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .play-button:hover {
+            transform: scale(1.1);
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .video-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .video-thumbnail {
+            background-color: #333;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .video-info {
+            padding: 1.5rem;
+        }
+
+        .video-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .video-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* 照片页面样式 */
+        .photo-section {
+            padding: 4rem 0;
+            background-color: white;
+        }
+
+        .timeline {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 3rem;
+            align-items: center;
+        }
+
+        .timeline-year {
+            background-color: #ff6600;
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            min-width: 80px;
+            text-align: center;
+            margin-right: 2rem;
+        }
+
+        /* 投资版图页面样式 */
+        .investments-section {
+            padding: 4rem 0;
+            background-color: white;
+        }
+
+        .investment-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .stat-item {
+            background: linear-gradient(135deg, #ff6600, #ff8533);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(255, 102, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 102, 0, 0.4);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .investment-timeline {
+            margin: 4rem 0;
+        }
+
+        .investment-timeline h3 {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #333;
+            font-size: 2rem;
+        }
+
+        .investment-year-group {
+            margin-bottom: 4rem;
+        }
+
+        .year-header {
+            background: linear-gradient(135deg, #ff6600, #ff8533);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 2rem;
+            display: inline-block;
+        }
+
+        .investment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .investment-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .investment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            border-color: #ff6600;
+        }
+
+        .company-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .company-logo img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+
+        .company-info h4 {
+            color: #333;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .investment-date {
+            color: #ff6600;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .company-desc {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .investment-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .investment-tags .tag {
+            background: #f0f0f0;
+            color: #666;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .investment-tags .tag:hover {
+            background: #ff6600;
+            color: white;
+        }
+
+        .investment-philosophy {
+            margin: 4rem 0;
+            padding: 3rem;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 20px;
+        }
+
+        .investment-philosophy h3 {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #333;
+            font-size: 2rem;
+        }
+
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .philosophy-item {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .philosophy-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .philosophy-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .philosophy-item h4 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .philosophy-item p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-photos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .timeline-photo {
+            background-color: #ddd;
+            height: 150px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+
+        /* 页脚样式 */
+        .footer {
+            background-color: #ff6600;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background-color: white;
+            color: #ff6600;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .timeline-year {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+
+            .timeline-photos {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">雷军</a>
+            <ul class="nav-menu">
+                <li class="nav-item active" onclick="showPage('home')">首页</li>
+                <li class="nav-item" onclick="showPage('videos')">视频演讲</li>
+                <li class="nav-item" onclick="showPage('photos')">照片画廊</li>
+                <li class="nav-item" onclick="showPage('investments')">投资版图</li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 页面内容 -->
+    <div class="page-content">
+        <!-- 首页 -->
+        <div id="home" class="page active">
+            <!-- 英雄区域 -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>雷军</h1>
+                    <p>小米科技创始人、董事长兼CEO，中国企业家和天使投资人</p>
+                    <a href="#about" class="cta-button" onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})">了解更多</a>
+                </div>
+            </section>
+
+            <!-- 关于部分 -->
+            <section id="about" class="about-section">
+                <div class="container">
+                    <h2 class="section-title">雷军人生历程</h2>
+                    <p style="text-align: center; color: #666; margin-bottom: 3rem; font-size: 1.1rem;">从湖北仙桃走向世界舞台的传奇企业家</p>
+                    
+                    <!-- 教育背景时间线 -->
+                    <div class="education-timeline">
+                        <h3 style="color: #ff6600; margin: 2rem 0 1rem 0; border-left: 4px solid #ff6600; padding-left: 1rem;">📚 教育背景</h3>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-year">1975-1981</div>
+                            <div class="timeline-content">
+                                <h4>幼儿园至小学时期</h4>
+                                <p>在湖北仙桃度过童年时光，从小展现出对电子产品的浓厚兴趣，经常拆解收音机等电器设备。</p>
+                                <div class="timeline-photos">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/leijun-childhood-1975.jpg" alt="雷军童年照片" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/leijun-primary-school.jpg" alt="小学时期" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiantao-hometown.jpg" alt="仙桃家乡" class="timeline-photo">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-year">1981-1987</div>
+                            <div class="timeline-content">
+                                <h4>中学时期</h4>
+                                <p>在仙桃中学就读，成绩优异，对数学和物理特别感兴趣，开始接触计算机编程。</p>
+                                <div class="timeline-photos">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/leijun-middle-school.jpg" alt="中学时期" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/early-computer-interest.jpg" alt="早期计算机兴趣" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiantao-middle-school.jpg" alt="仙桃中学" class="timeline-photo">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-year">1987-1991</div>
+                            <div class="timeline-content">
+                                <h4>武汉大学计算机系</h4>
+                                <p>以优异成绩考入武汉大学计算机系，两年修完四年课程，大学期间开始创业尝试，编写软件程序。</p>
+                                <div class="timeline-photos">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/wuhan-university-entrance.jpg" alt="武汉大学入学" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/university-programming.jpg" alt="大学编程" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/university-graduation.jpg" alt="大学毕业" class="timeline-photo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 职业发展时间线 -->
+                    <div class="career-timeline">
+                        <h3 style="color: #ff6600; margin: 3rem 0 1rem 0; border-left: 4px solid #ff6600; padding-left: 1rem;">💼 职业发展</h3>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-year">1991-2007</div>
+                            <div class="timeline-content">
+                                <h4>金山软件时期</h4>
+                                <p>大学毕业后加入金山软件，从程序员做起，历任总经理、CEO等职务，带领金山成功上市。</p>
+                                <div class="timeline-photos">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/kingsoft-early-days.jpg" alt="金山早期" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/kingsoft-ceo.jpg" alt="金山CEO" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/kingsoft-ipo.jpg" alt="金山上市" class="timeline-photo">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-year">2007-2010</div>
+                            <div class="timeline-content">
+                                <h4>天使投资人</h4>
+                                <p>离开金山后成为天使投资人，投资了凡客诚品、UCWeb、多玩游戏等多家知名互联网公司。</p>
+                                <div class="timeline-photos">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/angel-investor.jpg" alt="天使投资人" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/investment-portfolio.jpg" alt="投资组合" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/startup-ecosystem.jpg" alt="创业生态" class="timeline-photo">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-year">2010-至今</div>
+                            <div class="timeline-content">
+                                <h4>小米科技创始人</h4>
+                                <p>2010年创立小米科技，提出"为发烧而生"理念，打造小米生态链，成为全球知名智能手机品牌。</p>
+                                <div class="timeline-photos">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaomi-founding.jpg" alt="小米创立" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaomi-ecosystem.jpg" alt="小米生态链" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/global-expansion.jpg" alt="全球扩张" class="timeline-photo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 投资版图 -->
+                    <div class="investment-section">
+                        <h3 style="color: #ff6600; margin: 3rem 0 1rem 0; border-left: 4px solid #ff6600; padding-left: 1rem;">🚀 投资版图</h3>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-year">顺为资本</div>
+                            <div class="timeline-content">
+                                <h4>创立顺为资本</h4>
+                                <p>2011年创立顺为资本，专注于移动互联网、智能硬件等领域投资，累计投资超过400家企业。</p>
+                                <div class="timeline-photos">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/shunwei-capital.jpg" alt="顺为资本" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/investment-team.jpg" alt="投资团队" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/portfolio-companies.jpg" alt="投资组合" class="timeline-photo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 个人成就 -->
+                    <div class="achievements-section">
+                        <h3 style="color: #ff6600; margin: 3rem 0 1rem 0; border-left: 4px solid #ff6600; padding-left: 1rem;">🏆 主要成就</h3>
+                        <div class="about-content">
+                            <div class="about-text">
+                                <ul class="achievements">
+                                    <li>🎓 武汉大学计算机系学士学位，两年修完四年课程</li>
+                                    <li>💼 金山软件董事长，带领公司成功上市</li>
+                                    <li>📱 小米科技创始人、董事长兼CEO</li>
+                                    <li>💰 顺为资本创始合伙人，投资超400家企业</li>
+                                    <li>🌟 福布斯中国富豪榜常客</li>
+                                    <li>🏅 多次获得年度经济人物奖项</li>
+                                    <li>🚗 2024年进军汽车行业，发布小米SU7</li>
+                                    <li>🌍 推动中国制造走向世界</li>
+                                </ul>
+                            </div>
+                            <div class="photo-grid">
+                                <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/leijun-portrait-2024.jpg" alt="雷军肖像照" class="photo-item">
+                                <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaomi-launch-event.jpg" alt="小米发布会" class="photo-item">
+                                <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/awards-ceremony.jpg" alt="获奖现场" class="photo-item">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 特色视频预览 -->
+            <section class="video-section">
+                <div class="container">
+                    <h2 class="section-title">精选视频</h2>
+                    <div class="featured-video">
+                        <div class="play-button">▶</div>
+                    </div>
+                    <p style="text-align: center; margin-top: 1rem; font-size: 1.1rem;">小米14系列发布会：探索人工智能与移动技术的未来</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- 视频演讲页面 -->
+        <div id="videos" class="page">
+            <section class="video-section">
+                <div class="container">
+                    <h2 class="section-title">视频演讲</h2>
+                    <p style="text-align: center; color: #666; margin-bottom: 3rem;">雷军重要演讲与发布会精选 (2010-2025)</p>
+                    
+                    <!-- 2024年特色视频 -->
+                    <div class="featured-video" style="position: relative; margin-bottom: 2rem;">
+                        <video width="100%" height="400" controls poster="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/7c4047e6b5e5e4e5e5e5e5e5e5e5e5e5.jpg">
+                            <source src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaomi-su7-launch-2024.mp4" type="video/mp4">
+                            您的浏览器不支持视频播放。
+                        </video>
+                    </div>
+                    <h3 style="text-align: center; margin-bottom: 1rem;">小米SU7发布会：雷军的造车梦想成真 (2024年3月)</h3>
+                    <p style="text-align: center; color: #666; margin-bottom: 3rem;">历时三年，雷军正式发布小米首款电动汽车SU7，这是小米进军汽车行业的里程碑时刻。</p>
+
+                    <!-- 按年份分类的视频时间线 -->
+                    <div class="video-timeline">
+                        <h3 style="color: #ff6600; margin: 2rem 0 1rem 0; border-left: 4px solid #ff6600; padding-left: 1rem;">🚗 2024年 - 汽车时代</h3>
+                        <div class="video-grid">
+                            <div class="video-card">
+                                <div class="video-thumbnail" style="position: relative;">
+                                    <video width="100%" height="200" controls poster="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/su7-poster.jpg">
+                                        <source src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaomi-su7-launch.mp4" type="video/mp4">
+                                    </video>
+                                </div>
+                                <div class="video-info">
+                                    <h3 class="video-title">小米SU7正式发布</h3>
+                                    <p class="video-description">雷军亲自介绍小米首款电动汽车SU7，展示三年造车成果，标志着小米正式进入汽车行业。</p>
+                                    <span style="color: #ff6600; font-size: 0.9rem;">2024年3月28日</span>
+                                </div>
+                            </div>
+
+                            <div class="video-card">
+                                <div class="video-thumbnail" style="position: relative;">
+                                    <video width="100%" height="200" controls poster="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaomi14-ultra-poster.jpg">
+                                        <source src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaomi14-ultra-launch.mp4" type="video/mp4">
+                                    </video>
+                                </div>
+                                <div class="video-info">
+                                    <h3 class="video-title">小米14 Ultra发布会</h3>
+                                    <p class="video-description">搭载徕卡Summilux镜头的小米14 Ultra发布，雷军展示移动影像技术的新突破。</p>
+                                    <span style="color: #ff6600; font-size: 0.9rem;">2024年2月22日</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 style="color: #ff6600; margin: 2rem 0 1rem 0; border-left: 4px solid #ff6600; padding-left: 1rem;">📱 2023年 - 徕卡合作</h3>
+                        <div class="video-grid">
+                            <div class="video-card">
+                                <div class="video-thumbnail" style="position: relative;">
+                                    <video width="100%" height="200" controls poster="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaomi13-leica-poster.jpg">
+                                        <source src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaomi13-leica-launch.mp4" type="video/mp4">
+                                    </video>
+                                </div>
+                                <div class="video-info">
+                                    <h3 class="video-title">小米13系列与徕卡合作发布</h3>
+                                    <p class="video-description">雷军宣布小米与徕卡的战略合作，小米13系列搭载徕卡光学系统，开启移动摄影新时代。</p>
+                                    <span style="color: #ff6600; font-size: 0.9rem;">2023年12月11日</span>
+                                </div>
+                            </div>
+
+                            <div class="video-card">
+                                <div class="video-thumbnail" style="position: relative;">
+                                    <video width="100%" height="200" controls poster="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/miui14-poster.jpg">
+                                        <source src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/miui14-launch.mp4" type="video/mp4">
+                                    </video>
+                                </div>
+                                <div class="video-info">
+                                    <h3 class="video-title">MIUI 14发布会</h3>
+                                    <p class="video-description">雷军介绍MIUI 14的全新设计理念，强调简洁、高效的用户体验。</p>
+                                    <span style="color: #ff6600; font-size: 0.9rem;">2023年2月26日</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 style="color: #ff6600; margin: 2rem 0 1rem 0; border-left: 4px solid #ff6600; padding-left: 1rem;">🏎️ 2021年 - 造车决定</h3>
+                        <div class="video-grid">
+                            <div class="video-card">
+                                <div class="video-thumbnail" style="position: relative;">
+                                    <video width="100%" height="200" controls poster="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/car-announcement-poster.jpg">
+                                        <source src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaomi-car-announcement.mp4" type="video/mp4">
+                                    </video>
+                                </div>
+                                <div class="video-info">
+                                    <h3 class="video-title">雷军宣布小米造车</h3>
+                                    <p class="video-description">雷军正式宣布小米进军智能电动汽车行业，这是他人生中最后一次重大创业项目。</p>
+                                    <span style="color: #ff6600; font-size: 0.9rem;">2021年3月30日</span>
+                                </div>
+                            </div>
+
+                            <div class="video-card">
+                                <div class="video-thumbnail" style="position: relative;">
+                                    <video width="100%" height="200" controls poster="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaomi11-poster.jpg">
+                                        <source src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaomi11-launch.mp4" type="video/mp4">
+                                    </video>
+                                </div>
+                                <div class="video-info">
+                                    <h3 class="video-title">小米11发布会</h3>
+                                    <p class="video-description">小米11系列发布，雷军展示小米在5G时代的技术实力和产品创新。</p>
+                                    <span style="color: #ff6600; font-size: 0.9rem;">2021年2月8日</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 style="color: #ff6600; margin: 2rem 0 1rem 0; border-left: 4px solid #ff6600; padding-left: 1rem;">📈 2018年 - 上市里程碑</h3>
+                        <div class="video-grid">
+                            <div class="video-card">
+                                <div class="video-thumbnail" style="position: relative;">
+                                    <video width="100%" height="200" controls poster="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/ipo-poster.jpg">
+                                        <source src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaomi-ipo-ceremony.mp4" type="video/mp4">
+                                    </video>
+                                </div>
+                                <div class="video-info">
+                                    <h3 class="video-title">小米港交所上市敲钟</h3>
+                                    <p class="video-description">雷军在港交所敲钟，小米正式上市，成为港股首家同股不同权公司。</p>
+                                    <span style="color: #ff6600; font-size: 0.9rem;">2018年7月9日</span>
+                                </div>
+                            </div>
+
+                            <div class="video-card">
+                                <div class="video-thumbnail" style="position: relative;">
+                                    <video width="100%" height="200" controls poster="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaomi8-poster.jpg">
+                                        <source src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaomi8-launch.mp4" type="video/mp4">
+                                    </video>
+                                </div>
+                                <div class="video-info">
+                                    <h3 class="video-title">小米8发布会</h3>
+                                    <p class="video-description">小米8周年旗舰发布，雷军展示小米在AI和摄影技术方面的突破。</p>
+                                    <span style="color: #ff6600; font-size: 0.9rem;">2018年5月31日</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 style="color: #ff6600; margin: 2rem 0 1rem 0; border-left: 4px solid #ff6600; padding-left: 1rem;">🌟 2017年 - 全面屏革命</h3>
+                        <div class="video-grid">
+                            <div class="video-card">
+                                <div class="video-thumbnail" style="position: relative;">
+                                    <video width="100%" height="200" controls poster="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/mix-poster.jpg">
+                                        <source src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaomi-mix-launch.mp4" type="video/mp4">
+                                    </video>
+                                </div>
+                                <div class="video-info">
+                                    <h3 class="video-title">小米MIX全面屏发布</h3>
+                                    <p class="video-description">雷军发布小米MIX，开创全面屏时代，这款概念手机震撼了整个行业。</p>
+                                    <span style="color: #ff6600; font-size: 0.9rem;">2017年3月29日</span>
+                                </div>
+                            </div>
+
+                            <div class="video-card">
+                                <div class="video-thumbnail" style="position: relative;">
+                                    <video width="100%" height="200" controls poster="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaomi6-poster.jpg">
+                                        <source src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaomi6-launch.mp4" type="video/mp4">
+                                    </video>
+                                </div>
+                                <div class="video-info">
+                                    <h3 class="video-title">小米6发布会</h3>
+                                    <p class="video-description">小米6发布，雷军强调"探索黑科技"的理念，展示小米的技术创新能力。</p>
+                                    <span style="color: #ff6600; font-size: 0.9rem;">2017年4月19日</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 style="color: #ff6600; margin: 2rem 0 1rem 0; border-left: 4px solid #ff6600; padding-left: 1rem;">🚀 2010-2016年 - 创业初期</h3>
+                        <div class="video-grid">
+                            <div class="video-card">
+                                <div class="video-thumbnail" style="position: relative;">
+                                    <video width="100%" height="200" controls poster="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/first-launch-poster.jpg">
+                                        <source src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaomi-first-launch.mp4" type="video/mp4">
+                                    </video>
+                                </div>
+                                <div class="video-info">
+                                    <h3 class="video-title">小米手机1代发布会</h3>
+                                    <p class="video-description">雷军首次发布小米手机，提出"为发烧而生"的理念，开启小米传奇。</p>
+                                    <span style="color: #ff6600; font-size: 0.9rem;">2011年8月16日</span>
+                                </div>
+                            </div>
+
+                            <div class="video-card">
+                                <div class="video-thumbnail" style="position: relative;">
+                                    <video width="100%" height="200" controls poster="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/startup-story-poster.jpg">
+                                        <source src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaomi-startup-story.mp4" type="video/mp4">
+                                    </video>
+                                </div>
+                                <div class="video-info">
+                                    <h3 class="video-title">小米创业故事分享</h3>
+                                    <p class="video-description">雷军分享小米从零到一的创业历程，讲述如何用互联网思维重新定义手机行业。</p>
+                                    <span style="color: #ff6600; font-size: 0.9rem;">2012年12月</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 照片画廊页面 -->
+        <div id="photos" class="page">
+            <section class="photo-section">
+                <div class="container">
+                    <h2 class="section-title">照片画廊</h2>
+                    <p style="text-align: center; color: #666; margin-bottom: 3rem;">雷军与小米发展历程 (2010-2025)</p>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-year">2010</div>
+                            <div class="timeline-content">
+                                <h3>小米科技成立</h3>
+                                <p>雷军与林斌、黎万强等人共同创立小米科技，开启了智能手机创业之路。</p>
+                                <div class="timeline-photos">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/founding-team-2010.jpg" alt="创业团队合影" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/office-scene-2010.jpg" alt="办公室场景" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/early-design-2010.jpg" alt="早期产品设计" class="timeline-photo">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-year">2011</div>
+                            <div class="timeline-content">
+                                <h3>MIUI系统发布</h3>
+                                <p>小米发布基于Android深度定制的MIUI系统，获得用户广泛好评。</p>
+                                <div class="timeline-photos">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/miui-interface-2011.jpg" alt="MIUI界面展示" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/user-testing-2011.jpg" alt="用户体验测试" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/launch-event-2011.jpg" alt="发布会现场" class="timeline-photo">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-year">2012</div>
+                            <div class="timeline-content">
+                                <h3>小米手机1代发布</h3>
+                                <p>小米正式发布第一款智能手机，以高性价比震撼市场。</p>
+                                <div class="timeline-photos">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaomi1-launch-2012.jpg" alt="小米1发布会" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/product-showcase-2012.jpg" alt="产品展示" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/users-queue-2012.jpg" alt="用户排队购买" class="timeline-photo">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-year">2013</div>
+                            <div class="timeline-content">
+                                <h3>快速发展期</h3>
+                                <p>小米手机销量快速增长，开始布局生态链产品。</p>
+                                <div class="timeline-photos">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/sales-celebration-2013.jpg" alt="销量庆祝" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/team-expansion-2013.jpg" alt="团队扩张" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/ecosystem-start-2013.jpg" alt="生态链启动" class="timeline-photo">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-year">2014</div>
+                            <div class="timeline-content">
+                                <h3>国际化布局</h3>
+                                <p>小米开始进军海外市场，在印度等地取得成功。</p>
+                                <div class="timeline-photos">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/global-launch-2014.jpg" alt="海外发布会" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/international-team-2014.jpg" alt="国际团队" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/global-users-2014.jpg" alt="全球用户" class="timeline-photo">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-year">2015</div>
+                            <div class="timeline-content">
+                                <h3>生态链成果</h3>
+                                <p>小米生态链产品丰富，涵盖智能家居、可穿戴设备等多个领域。</p>
+                                <div class="timeline-photos">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/ecosystem-2015.jpg" alt="生态链产品" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/smart-home-2015.jpg" alt="智能家居展示" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/partner-conference-2015.jpg" alt="合作伙伴大会" class="timeline-photo">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-year">2016</div>
+                            <div class="timeline-content">
+                                <h3>小米5发布与生态扩张</h3>
+                                <p>小米5正式发布，搭载骁龙820处理器，同时生态链产品线进一步扩张。</p>
+                                <div class="timeline-photos">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaomi5-launch-2016.jpg" alt="小米5发布会" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/ecosystem-expansion-2016.jpg" alt="生态链扩张" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/leijun-presentation-2016.jpg" alt="雷军演讲" class="timeline-photo">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-year">2017</div>
+                            <div class="timeline-content">
+                                <h3>全面屏革命</h3>
+                                <p>小米MIX发布，开创全面屏时代，震撼整个手机行业。</p>
+                                <div class="timeline-photos">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaomi-mix-launch-2017.jpg" alt="小米MIX发布" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/fullscreen-revolution-2017.jpg" alt="全面屏革命" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/industry-shock-2017.jpg" alt="行业震撼" class="timeline-photo">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-year">2018</div>
+                            <div class="timeline-content">
+                                <h3>港交所上市里程碑</h3>
+                                <p>小米在港交所成功上市，成为港股首家同股不同权公司，雷军敲响上市钟声。</p>
+                                <div class="timeline-photos">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/ipo-ceremony-2018.jpg" alt="上市敲钟仪式" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/hkex-listing-2018.jpg" alt="港交所上市" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/celebration-team-2018.jpg" alt="庆祝团队" class="timeline-photo">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-year">2019</div>
+                            <div class="timeline-content">
+                                <h3>5G时代布局</h3>
+                                <p>小米积极布局5G技术，发布首款5G手机，为5G时代做好准备。</p>
+                                <div class="timeline-photos">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/5g-phone-launch-2019.jpg" alt="5G手机发布" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/5g-technology-2019.jpg" alt="5G技术展示" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/future-vision-2019.jpg" alt="未来愿景" class="timeline-photo">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-year">2020</div>
+                            <div class="timeline-content">
+                                <h3>疫情挑战与坚持</h3>
+                                <p>面对全球疫情挑战，小米坚持创新，推出多款重要产品，展现企业韧性。</p>
+                                <div class="timeline-photos">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/pandemic-challenge-2020.jpg" alt="疫情挑战" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/innovation-continues-2020.jpg" alt="持续创新" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/team-resilience-2020.jpg" alt="团队韧性" class="timeline-photo">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-year">2021</div>
+                            <div class="timeline-content">
+                                <h3>造车决定公布</h3>
+                                <p>雷军正式宣布小米进军智能电动汽车行业，这是他人生中最后一次重大创业。</p>
+                                <div class="timeline-photos">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/car-announcement-2021.jpg" alt="造车宣布" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/leijun-emotional-2021.jpg" alt="雷军动情演讲" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/new-journey-2021.jpg" alt="新征程开启" class="timeline-photo">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-year">2022</div>
+                            <div class="timeline-content">
+                                <h3>技术创新突破</h3>
+                                <p>小米在影像技术、快充技术等多个领域实现重大突破，技术实力持续提升。</p>
+                                <div class="timeline-photos">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/tech-breakthrough-2022.jpg" alt="技术突破" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/camera-innovation-2022.jpg" alt="影像创新" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/fast-charging-2022.jpg" alt="快充技术" class="timeline-photo">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-year">2023</div>
+                            <div class="timeline-content">
+                                <h3>徕卡合作启动</h3>
+                                <p>小米与徕卡达成战略合作，小米13系列搭载徕卡光学系统，开启移动摄影新时代。</p>
+                                <div class="timeline-photos">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/leica-partnership-2023.jpg" alt="徕卡合作" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaomi13-leica-2023.jpg" alt="小米13徕卡" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/photography-revolution-2023.jpg" alt="摄影革命" class="timeline-photo">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-year">2024</div>
+                            <div class="timeline-content">
+                                <h3>小米SU7汽车发布</h3>
+                                <p>历时三年研发，小米首款电动汽车SU7正式发布，雷军的造车梦想成真。</p>
+                                <div class="timeline-photos">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/su7-launch-2024.jpg" alt="SU7发布" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/car-dream-realized-2024.jpg" alt="造车梦想成真" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/automotive-milestone-2024.jpg" alt="汽车里程碑" class="timeline-photo">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-year">2025</div>
+                            <div class="timeline-content">
+                                <h3>未来展望</h3>
+                                <p>展望未来，小米将继续在智能手机、智能汽车、AIoT等领域深耕，构建更完整的生态体系。</p>
+                                <div class="timeline-photos">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/future-vision-2025.jpg" alt="未来愿景" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/ecosystem-complete-2025.jpg" alt="生态完整" class="timeline-photo">
+                                    <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/innovation-continues-2025.jpg" alt="持续创新" class="timeline-photo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 投资版图页面 -->
+        <div id="investments" class="page">
+            <section class="investments-section">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>投资版图</h2>
+                        <p>雷军通过顺为资本和个人投资，布局了众多优秀企业，涵盖移动互联网、智能硬件、新能源等多个领域</p>
+                    </div>
+
+                    <!-- 投资统计 -->
+                    <div class="investment-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">400+</div>
+                            <div class="stat-label">投资企业</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">独角兽企业</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">20+</div>
+                            <div class="stat-label">上市公司</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">15年</div>
+                            <div class="stat-label">投资经验</div>
+                        </div>
+                    </div>
+
+                    <!-- 投资时间线 -->
+                    <div class="investment-timeline">
+                        <h3>重点投资企业（按时间顺序）</h3>
+                        
+                        <div class="investment-year-group">
+                            <div class="year-header">2010-2012年</div>
+                            <div class="investment-grid">
+                                <div class="investment-card">
+                                    <div class="company-logo">
+                                        <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/ucweb-logo.png" alt="UC优视">
+                                    </div>
+                                    <div class="company-info">
+                                        <h4>UC优视</h4>
+                                        <p class="investment-date">2010年</p>
+                                        <p class="company-desc">移动浏览器领域的领军企业，后被阿里巴巴收购，成为雷军早期投资的经典案例。</p>
+                                        <div class="investment-tags">
+                                            <span class="tag">移动互联网</span>
+                                            <span class="tag">浏览器</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="investment-card">
+                                    <div class="company-logo">
+                                        <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/vancl-logo.png" alt="凡客诚品">
+                                    </div>
+                                    <div class="company-info">
+                                        <h4>凡客诚品</h4>
+                                        <p class="investment-date">2010年</p>
+                                        <p class="company-desc">中国电商服装品牌的先驱，开创了互联网服装品牌的新模式。</p>
+                                        <div class="investment-tags">
+                                            <span class="tag">电商</span>
+                                            <span class="tag">服装</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="investment-card">
+                                    <div class="company-logo">
+                                        <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/yy-logo.png" alt="YY语音">
+                                    </div>
+                                    <div class="company-info">
+                                        <h4>YY语音</h4>
+                                        <p class="investment-date">2011年</p>
+                                        <p class="company-desc">国内领先的语音社交平台，后成功在纳斯达克上市。</p>
+                                        <div class="investment-tags">
+                                            <span class="tag">社交</span>
+                                            <span class="tag">语音</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="investment-year-group">
+                            <div class="year-header">2013-2015年</div>
+                            <div class="investment-grid">
+                                <div class="investment-card">
+                                    <div class="company-logo">
+                                        <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/iqiyi-logo.png" alt="爱奇艺">
+                                    </div>
+                                    <div class="company-info">
+                                        <h4>爱奇艺</h4>
+                                        <p class="investment-date">2013年</p>
+                                        <p class="company-desc">中国领先的在线视频平台，后在纳斯达克成功上市。</p>
+                                        <div class="investment-tags">
+                                            <span class="tag">视频</span>
+                                            <span class="tag">娱乐</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="investment-card">
+                                    <div class="company-logo">
+                                        <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/kingsoft-cloud-logo.png" alt="金山云">
+                                    </div>
+                                    <div class="company-info">
+                                        <h4>金山云</h4>
+                                        <p class="investment-date">2014年</p>
+                                        <p class="company-desc">中国领先的云计算服务提供商，在纳斯达克成功上市。</p>
+                                        <div class="investment-tags">
+                                            <span class="tag">云计算</span>
+                                            <span class="tag">企业服务</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="investment-card">
+                                    <div class="company-logo">
+                                        <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/cheetah-mobile-logo.png" alt="猎豹移动">
+                                    </div>
+                                    <div class="company-info">
+                                        <h4>猎豹移动</h4>
+                                        <p class="investment-date">2014年</p>
+                                        <p class="company-desc">全球领先的移动工具应用开发商，在纽交所成功上市。</p>
+                                        <div class="investment-tags">
+                                            <span class="tag">移动应用</span>
+                                            <span class="tag">工具</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="investment-year-group">
+                            <div class="year-header">2016-2018年</div>
+                            <div class="investment-grid">
+                                <div class="investment-card">
+                                    <div class="company-logo">
+                                        <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/nio-logo.png" alt="蔚来汽车">
+                                    </div>
+                                    <div class="company-info">
+                                        <h4>蔚来汽车</h4>
+                                        <p class="investment-date">2016年</p>
+                                        <p class="company-desc">中国领先的智能电动汽车品牌，在纽交所成功上市。</p>
+                                        <div class="investment-tags">
+                                            <span class="tag">新能源汽车</span>
+                                            <span class="tag">智能驾驶</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="investment-card">
+                                    <div class="company-logo">
+                                        <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/huami-logo.png" alt="华米科技">
+                                    </div>
+                                    <div class="company-info">
+                                        <h4>华米科技</h4>
+                                        <p class="investment-date">2016年</p>
+                                        <p class="company-desc">全球领先的智能可穿戴设备公司，小米手环的制造商。</p>
+                                        <div class="investment-tags">
+                                            <span class="tag">可穿戴设备</span>
+                                            <span class="tag">健康</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="investment-card">
+                                    <div class="company-logo">
+                                        <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/roborock-logo.png" alt="石头科技">
+                                    </div>
+                                    <div class="company-info">
+                                        <h4>石头科技</h4>
+                                        <p class="investment-date">2017年</p>
+                                        <p class="company-desc">智能扫地机器人领域的领军企业，在科创板成功上市。</p>
+                                        <div class="investment-tags">
+                                            <span class="tag">智能硬件</span>
+                                            <span class="tag">机器人</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="investment-year-group">
+                            <div class="year-header">2019-2021年</div>
+                            <div class="investment-grid">
+                                <div class="investment-card">
+                                    <div class="company-logo">
+                                        <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/bilibili-logo.png" alt="哔哩哔哩">
+                                    </div>
+                                    <div class="company-info">
+                                        <h4>哔哩哔哩</h4>
+                                        <p class="investment-date">2019年</p>
+                                        <p class="company-desc">中国年轻人喜爱的文化社区和视频平台，在纳斯达克上市。</p>
+                                        <div class="investment-tags">
+                                            <span class="tag">视频社区</span>
+                                            <span class="tag">文化娱乐</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="investment-card">
+                                    <div class="company-logo">
+                                        <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/kuaishou-logo.png" alt="快手">
+                                    </div>
+                                    <div class="company-info">
+                                        <h4>快手</h4>
+                                        <p class="investment-date">2020年</p>
+                                        <p class="company-desc">中国领先的短视频和直播平台，在港交所成功上市。</p>
+                                        <div class="investment-tags">
+                                            <span class="tag">短视频</span>
+                                            <span class="tag">直播</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="investment-card">
+                                    <div class="company-logo">
+                                        <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/xiaopeng-logo.png" alt="小鹏汽车">
+                                    </div>
+                                    <div class="company-info">
+                                        <h4>小鹏汽车</h4>
+                                        <p class="investment-date">2020年</p>
+                                        <p class="company-desc">中国智能电动汽车的领军企业，在纽交所和港交所双重上市。</p>
+                                        <div class="investment-tags">
+                                            <span class="tag">新能源汽车</span>
+                                            <span class="tag">自动驾驶</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="investment-year-group">
+                            <div class="year-header">2022-2025年</div>
+                            <div class="investment-grid">
+                                <div class="investment-card">
+                                    <div class="company-logo">
+                                        <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/meituan-logo.png" alt="美团">
+                                    </div>
+                                    <div class="company-info">
+                                        <h4>美团</h4>
+                                        <p class="investment-date">2022年</p>
+                                        <p class="company-desc">中国领先的生活服务电商平台，在港交所成功上市。</p>
+                                        <div class="investment-tags">
+                                            <span class="tag">生活服务</span>
+                                            <span class="tag">外卖配送</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="investment-card">
+                                    <div class="company-logo">
+                                        <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/ai-startup-logo.png" alt="AI创业公司">
+                                    </div>
+                                    <div class="company-info">
+                                        <h4>多家AI创业公司</h4>
+                                        <p class="investment-date">2023-2024年</p>
+                                        <p class="company-desc">积极布局人工智能领域，投资多家AI创业公司，涵盖大模型、机器人等方向。</p>
+                                        <div class="investment-tags">
+                                            <span class="tag">人工智能</span>
+                                            <span class="tag">大模型</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="investment-card">
+                                    <div class="company-logo">
+                                        <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/new-energy-logo.png" alt="新能源企业">
+                                    </div>
+                                    <div class="company-info">
+                                        <h4>新能源产业链</h4>
+                                        <p class="investment-date">2024-2025年</p>
+                                        <p class="company-desc">持续投资新能源产业链上下游企业，包括电池技术、充电设施等领域。</p>
+                                        <div class="investment-tags">
+                                            <span class="tag">新能源</span>
+                                            <span class="tag">产业链</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 投资理念 -->
+                    <div class="investment-philosophy">
+                        <h3>投资理念</h3>
+                        <div class="philosophy-grid">
+                            <div class="philosophy-item">
+                                <div class="philosophy-icon">🎯</div>
+                                <h4>专注赛道</h4>
+                                <p>重点关注移动互联网、智能硬件、新能源汽车等前沿科技领域</p>
+                            </div>
+                            <div class="philosophy-item">
+                                <div class="philosophy-icon">👥</div>
+                                <h4>投资团队</h4>
+                                <p>相信优秀的创业团队是成功的关键，重视创始人的格局和执行力</p>
+                            </div>
+                            <div class="philosophy-item">
+                                <div class="philosophy-icon">🚀</div>
+                                <h4>长期价值</h4>
+                                <p>追求长期价值创造，与被投企业共同成长，实现多方共赢</p>
+                            </div>
+                            <div class="philosophy-item">
+                                <div class="philosophy-icon">🌐</div>
+                                <h4>生态协同</h4>
+                                <p>构建投资生态圈，促进被投企业之间的业务协同和资源共享</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于雷军</h3>
+                    <p>小米科技创始人、董事长兼CEO</p>
+                    <p>金山软件董事长</p>
+                    <p>顺为资本创始合伙人</p>
+                </div>
+                <div class="footer-section">
+                    <h3>公司</h3>
+                    <p><a href="#">小米科技</a></p>
+                    <p><a href="#">金山软件</a></p>
+                    <p><a href="#">顺为资本</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>媒体</h3>
+                    <p><a href="#">新闻报道</a></p>
+                    <p><a href="#">演讲视频</a></p>
+                    <p><a href="#">采访文章</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>联系方式</h3>
+                    <p><a href="#">官方微博</a></p>
+                    <p><a href="#">官方微信</a></p>
+                    <p><a href="#">商务合作</a></p>
+                </div>
+            </div>
+            <div class="social-links">
+                <a href="#" class="social-link">微</a>
+                <a href="#" class="social-link">博</a>
+                <a href="#" class="social-link">信</a>
+                <a href="#" class="social-link">邮</a>
+            </div>
+            <p style="margin-top: 2rem; opacity: 0.8;">&copy; 2024 雷军个人网站. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 页面切换功能
+        function showPage(pageId) {
+            // 隐藏所有页面
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // 显示选中的页面
+            document.getElementById(pageId).classList.add('active');
+
+            // 更新导航栏状态
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // 根据页面ID设置对应的导航项为活跃状态
+            const navTexts = {
+                'home': '首页',
+                'videos': '视频演讲',
+                'photos': '照片画廊'
+            };
+
+            navItems.forEach(item => {
+                if (item.textContent === navTexts[pageId]) {
+                    item.classList.add('active');
+                }
+            });
+
+            // 滚动到页面顶部
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 播放按钮点击效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const playButtons = document.querySelectorAll('.play-button');
+            playButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    alert('视频播放功能需要集成视频播放器');
+                });
+            });
+
+            // 视频卡片点击效果
+            const videoCards = document.querySelectorAll('.video-card');
+            videoCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const title = card.querySelector('.video-title').textContent;
+                    alert(`播放视频: ${title}`);
+                });
+            });
+
+            // 照片点击效果
+            const photos = document.querySelectorAll('.timeline-photo, .photo-item');
+            photos.forEach(photo => {
+                photo.addEventListener('click', function() {
+                    alert('图片查看功能需要集成图片查看器');
+                });
+            });
+        });
+
+        // 平滑滚动效果
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
